@@ -1,0 +1,17 @@
+services:
+  crowdsec-web-ui:
+    image: ghcr.io/theduffman85/crowdsec-web-ui:latest
+    container_name: crowdsec_web_ui
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - crowdsec-net
+
+networks:
+  crowdsec-net:
+    # Réseau Docker partagé avec CrowdSec si CrowdSec est en Docker
+    # Si CrowdSec est en paquet natif, ce réseau sert juste à isoler le conteneur
+    external: true
